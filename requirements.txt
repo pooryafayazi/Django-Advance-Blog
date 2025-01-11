@@ -1,0 +1,2 @@
+django==4.2
+python-decouple==3.8
