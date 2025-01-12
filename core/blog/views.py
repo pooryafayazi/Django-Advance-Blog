@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic.base import TemplateView,RedirectView
-from django.views.generic import ListView,DetailView,FormView,CreateView
+from django.views.generic import ListView,DetailView,FormView,CreateView,UpdateView
 
 from .forms import PostForm
 from .models import Post
@@ -73,14 +73,24 @@ class PostCreateView(FormView):
 
 class PostCreateView(CreateView):
     model = Post
-    # form_class = PostForm
-    fields = ['author', 'title', 'content', 'status','category','published_date']    
+    form_class = PostForm
+    # fields = ['author', 'title', 'content', 'status','category','published_date']    
     success_url = '/blog/post/'
 
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
+class PostEditView(UpdateView):
+    model = Post
+    form_class = PostForm
+    # fields = ['author', 'title', 'content', 'status','category','published_date']    
+    success_url = '/blog/post/'
 
-
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
 
 
 
