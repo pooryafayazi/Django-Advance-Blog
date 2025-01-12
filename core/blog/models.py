@@ -1,6 +1,10 @@
 from django.db import models
-
+from django.contrib.auth import get_user_model
 # Create your models here.
+
+# get_user_model objects
+User = get_user_model()
+
 class Post (models.Model):
     '''
     Post model for blog app
@@ -10,7 +14,7 @@ class Post (models.Model):
     title = models.CharField(max_length=255)
     content = models.TextField()
     status = models.BooleanField(default=True)
-    category = models.ForeignKey('Category', on_delete=models.SetNull,mull=True)
+    category = models.ForeignKey('Category', on_delete=models.SET_NULL,null=True)
     created_data = models.DateTimeField(auto_now_add=True)
     updated_data = models.DateTimeField(auto_now=True)
     published_data = models.DateTimeField()
