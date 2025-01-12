@@ -47,12 +47,11 @@ class Redirecttoitmeter(RedirectView):
     
 
 class PostList(ListView):
-    #model = Post
+    model = Post
     # queryset = Post.objects.all()
     context_object_name = 'posts'
-
-    # paginate_by = 2
-    # ordering = ['-created_date']
-    def get_queryset(self):
-        posts = Post.objects.filter(status='True')
-        return posts
+    paginate_by = 2
+    ordering = ['-created_date']
+    # def get_queryset(self):
+    #     posts = Post.objects.filter(status='True')
+    #     return posts
