@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import (AbstractBaseUser, BaseUserManager,PermissionsMixin)
 from django.utils.translation import gettext_lazy as _
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 # Create your models here.
 class UserManager(BaseUserManager):
     '''
@@ -56,22 +59,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
 
-    # def has_perm(self, perm, obj=None):
-    #     return self.is_superuser
-
-    # def has_module_perms(self, app_label):
-    #     return True
-
-    # def get_full_name(self):
-    #     return self.name
-
-    # def get_short_name(self):
-    #     return self.name
-
-    # class Meta:
-    #     db_table = 'users'
-    #     verbose_name = 'User'
-    #     verbose_name_plural = 'Users'
 
 class Profile(models.Model):
     '''
@@ -86,7 +73,13 @@ class Profile(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.email
+        return self.user.email
 
     # class Meta:
     #
+
+
+@receiver(post_save, sender=User)
+def save_profile(sender, instance, created,**kwargs):
+    if created:
+        Profile.objects.create(user=instance)
