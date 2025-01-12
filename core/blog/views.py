@@ -1,16 +1,19 @@
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.shortcuts import render,redirect
+from django.views.generic.base import TemplateView,RedirectView
+from django.shortcuts import get_object_or_404
 from .models import Post
 # Create your views here.
 
 
+# function based view show a template
+"""
 def indexView(request):
     '''
     Function based view for index page.
     '''
     context = {'name': 'ali'}
     return render(request, 'index.html', context)
-
+"""
 
 class IndexView(TemplateView):
     '''
@@ -23,3 +26,23 @@ class IndexView(TemplateView):
         context["name"] = "hassan"
         context["posts"] = Post.objects.all()
         return context
+    
+
+
+# function based view for redirecting to itmeter page
+"""
+def redirecttoitmeter(request):
+    '''
+    Function based view for redirecting to itmeter page.
+    '''
+    return redirect('https://itmeter.ir')
+"""
+
+# class based view for redirecting to itmeter page
+class Redirecttoitmeter(RedirectView):
+    url = 'https://itmeter.ir'
+
+    def get_redirect_url(self, *args, **kwargs):
+        post = get_object_or_404(Post, pk=kwargs['pk'])
+        print(post)
+        return super().get_redirect_url(*args, **kwargs)
