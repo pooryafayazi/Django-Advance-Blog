@@ -72,3 +72,21 @@ class User(AbstractBaseUser, PermissionsMixin):
     #     db_table = 'users'
     #     verbose_name = 'User'
     #     verbose_name_plural = 'Users'
+
+class Profile(models.Model):
+    '''
+    User profile model
+    '''
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    image = models.ImageField( null=True, blank=True)
+    description = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    updated_date = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.email
+
+    # class Meta:
+    #

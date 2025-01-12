@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 # Register your models here.
-from .models import User
+from .models import User,Profile
 
 class customUserAdmin(UserAdmin):
     model = User   
@@ -20,4 +20,5 @@ class customUserAdmin(UserAdmin):
                 ('Permissions', {'fields': ('is_staff','is_superuser', 'is_active')}),                
                 )
 
+admin.site.register(Profile)
 admin.site.register(User, customUserAdmin)
