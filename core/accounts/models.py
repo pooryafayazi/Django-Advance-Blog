@@ -36,25 +36,21 @@ class UserManager(BaseUserManager):
 
 
 
-class User(BaseUserManager, AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     '''
     Custom User model with email as unique identifier
     '''
     email = models.EmailField(max_length=255, unique=True)
     is_superuser = models.BooleanField(default=False)
-
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     # is_verified = models.BooleanField(default=False)
-    first_name = models.CharField(max_length=255)
+
+    USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-
-
-
-    USERNAME_FIELD = 'email'
 
     objects = UserManager()
     def __str__(self):
