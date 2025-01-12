@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic.base import TemplateView,RedirectView
 from django.views.generic import ListView,DetailView,FormView,CreateView,UpdateView,DeleteView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 
 from .forms import PostForm
 from .models import Post
@@ -48,7 +48,8 @@ class Redirecttoitmeter(RedirectView):
         return super().get_redirect_url(*args, **kwargs)
     
 
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(PermissionRequiredMixin,LoginRequiredMixin, ListView):
+    permission_required = 'blog.view_post'
     model = Post
     # queryset = Post.objects.all()
     context_object_name = 'posts'
