@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.views.generic.base import TemplateView,RedirectView
-from django.views.generic import ListView,DetailView,FormView,CreateView,UpdateView
+from django.views.generic import ListView,DetailView,FormView,CreateView,UpdateView,DeleteView
 
 from .forms import PostForm
 from .models import Post
@@ -51,7 +51,7 @@ class PostListView(ListView):
     model = Post
     # queryset = Post.objects.all()
     context_object_name = 'posts'
-    paginate_by = 2
+    paginate_by = 3
     ordering = ['-created_date']
     # def get_queryset(self):
     #     posts = Post.objects.filter(status='True')
@@ -91,6 +91,11 @@ class PostEditView(UpdateView):
     def form_valid(self, form):
         form.instance.author = self.request.user
         return super().form_valid(form)
+
+
+class PostDeleteView(DeleteView):
+    model = Post
+    success_url = '/blog/post/'
 
 
 
