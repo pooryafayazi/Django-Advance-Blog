@@ -5,11 +5,17 @@ from .models import Post
 
 
 def indexView(request):
+    '''
+    Function based view for index page.
+    '''
     context = {'name': 'ali'}
     return render(request, 'index.html', context)
 
 
 class IndexView(TemplateView):
+    '''
+    Class based view for index page.
+    '''
     template_name = 'index.html'
     extra_context = {'name': 'reza'}
     def get_context_data(self, **kwargs):
