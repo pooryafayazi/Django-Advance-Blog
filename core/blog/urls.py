@@ -7,9 +7,11 @@ from . import views
 app_name = "blog"
 
 urlpatterns = [
-    path('cbv-index', views.IndexView.as_view(), name="cbv-index"),
-    path('post/', views.PostList.as_view(), name="post-list"),
-    path("go-to-maktab/<int:pk>", views.Redirecttoitmeter.as_view(), name="go-to-maktab"),
+    #path('cbv-index', views.IndexView.as_view(), name="cbv-index"),
+    #path("go-to-maktab/<int:pk>", views.Redirecttoitmeter.as_view(), name="go-to-maktab"),
+    path('post/', views.PostListView.as_view(), name="post-list"),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name="post-detail"),
+
 
 
 ]

@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.views.generic.base import TemplateView,RedirectView
+from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from .models import Post
@@ -46,7 +47,7 @@ class Redirecttoitmeter(RedirectView):
         return super().get_redirect_url(*args, **kwargs)
     
 
-class PostList(ListView):
+class PostListView(ListView):
     model = Post
     # queryset = Post.objects.all()
     context_object_name = 'posts'
@@ -55,3 +56,7 @@ class PostList(ListView):
     # def get_queryset(self):
     #     posts = Post.objects.filter(status='True')
     #     return posts
+
+
+class PostDetailView(DetailView):
+    model = Post
