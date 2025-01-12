@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
 from django.views.generic.base import TemplateView,RedirectView
+from django.views.generic.list import ListView
 from django.shortcuts import get_object_or_404
 from .models import Post
 # Create your views here.
-
 
 # function based view show a template
 """
@@ -27,8 +27,6 @@ class IndexView(TemplateView):
         context["posts"] = Post.objects.all()
         return context
     
-
-
 # function based view for redirecting to itmeter page
 """
 def redirecttoitmeter(request):
@@ -46,3 +44,15 @@ class Redirecttoitmeter(RedirectView):
         post = get_object_or_404(Post, pk=kwargs['pk'])
         print(post)
         return super().get_redirect_url(*args, **kwargs)
+    
+
+class PostList(ListView):
+    #model = Post
+    # queryset = Post.objects.all()
+    context_object_name = 'posts'
+
+    # paginate_by = 2
+    # ordering = ['-created_date']
+    def get_queryset(self):
+        posts = Post.objects.filter(status='True')
+        return posts
